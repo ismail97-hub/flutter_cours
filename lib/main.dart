@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:secondapp/app_preferences.dart';
+import 'package:secondapp/database/database.dart';
+import 'package:secondapp/database/model.dart';
 import 'package:secondapp/home_view.dart';
 import 'package:secondapp/login_view.dart';
 
@@ -7,8 +9,24 @@ void main(List<String> args) {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  insertClient()async{
+    final database = await AppDatabase.create();
+    database.clientDao.insertClient(Client(null,"ismail97", "123456","0653406950","user"));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {

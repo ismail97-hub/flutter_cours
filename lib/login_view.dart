@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secondapp/app_preferences.dart';
 import 'package:secondapp/data_source.dart';
+import 'package:secondapp/database/database.dart';
 import 'package:secondapp/home_view.dart';
-import 'package:secondapp/model.dart';
+import 'package:secondapp/database/model.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -51,8 +52,10 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(
               height: 50,
               width: double.infinity,
-              child: ElevatedButton(onPressed: (){
-                for (Client client in clients) {
+              child: ElevatedButton(onPressed: ()async{
+                final database = await AppDatabase.create();
+                List<Client> clients1 = await database.clientDao.findAll();
+                for (Client client in clients1) {
                   if (client.username==username&&client.password==password) {
                     Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (_)=>HomeView()),(_)=>false);
                     setIsLoggedIn(true);
