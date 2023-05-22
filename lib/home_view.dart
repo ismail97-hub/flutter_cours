@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:secondapp/app_preferences.dart';
+import 'package:secondapp/login_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -11,7 +14,15 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Home")),
+      appBar: AppBar(
+        title: Text("Home"),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (_)=>LoginView()), (route) => false);
+            setIsLoggedIn(false);
+          }, icon: Icon(Icons.logout))
+        ],
+      ),
       body: Center(
         child: Text("Welcome"),
       ),

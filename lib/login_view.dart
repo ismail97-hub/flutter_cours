@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:secondapp/app_preferences.dart';
 import 'package:secondapp/data_source.dart';
 import 'package:secondapp/home_view.dart';
 import 'package:secondapp/model.dart';
@@ -54,6 +55,7 @@ class _LoginViewState extends State<LoginView> {
                 for (Client client in clients) {
                   if (client.username==username&&client.password==password) {
                     Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (_)=>HomeView()),(_)=>false);
+                    setIsLoggedIn(true);
                   }
                 }
               }, child: Text("Login")))    
