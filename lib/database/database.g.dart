@@ -61,7 +61,9 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  ClinetDAO? _clientDaoInstance;
+  ClientDAO? _clientDaoInstance;
+
+  ProduitDAO? _produitDAOInstance;
 
   Future<sqflite.Database> open(
     String path,
@@ -86,6 +88,8 @@ class _$AppDatabase extends AppDatabase {
       onCreate: (database, version) async {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Client` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `telephone` TEXT NOT NULL, `role` TEXT NOT NULL)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `Produit` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `designation` TEXT NOT NULL, `pu` REAL NOT NULL, `qte` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -94,13 +98,18 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  ClinetDAO get clientDao {
-    return _clientDaoInstance ??= _$ClinetDAO(database, changeListener);
+  ClientDAO get clientDao {
+    return _clientDaoInstance ??= _$ClientDAO(database, changeListener);
+  }
+
+  @override
+  ProduitDAO get produitDAO {
+    return _produitDAOInstance ??= _$ProduitDAO(database, changeListener);
   }
 }
 
-class _$ClinetDAO extends ClinetDAO {
-  _$ClinetDAO(
+class _$ClientDAO extends ClientDAO {
+  _$ClientDAO(
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
@@ -137,5 +146,44 @@ class _$ClinetDAO extends ClinetDAO {
   @override
   Future<void> insertClient(Client client) async {
     await _clientInsertionAdapter.insert(client, OnConflictStrategy.abort);
+  }
+}
+
+class _$ProduitDAO extends ProduitDAO {
+  _$ProduitDAO(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _produitInsertionAdapter = InsertionAdapter(
+            database,
+            'Produit',
+            (Produit item) => <String, Object?>{
+                  'id': item.id,
+                  'designation': item.designation,
+                  'pu': item.pu,
+                  'qte': item.qte
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<Produit> _produitInsertionAdapter;
+
+  @override
+  Future<List<Produit>> findAll() async {
+    return _queryAdapter.queryList('SELECT * FROM Produit',
+        mapper: (Map<String, Object?> row) => Produit(
+            row['id'] as int?,
+            row['designation'] as String,
+            row['pu'] as double,
+            row['qte'] as int));
+  }
+
+  @override
+  Future<void> insertProduit(Produit produit) async {
+    await _produitInsertionAdapter.insert(produit, OnConflictStrategy.abort);
   }
 }

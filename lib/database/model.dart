@@ -15,3 +15,18 @@ class Client {
 
   Client(this.id,this.username,this.password,this.telephone,this.role);
 }
+
+@entity
+class Produit {
+  @PrimaryKey(autoGenerate: true)
+  int? id;
+
+  String designation;
+
+  double pu;
+
+  int qte;
+
+  Produit(this.id,this.designation,this.pu,this.qte);
+
+}

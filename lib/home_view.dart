@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secondapp/app_preferences.dart';
 import 'package:secondapp/login_view.dart';
+import 'package:secondapp/produits_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -24,7 +25,10 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
       body: Center(
-        child: Text("Welcome"),
+        child: ElevatedButton(onPressed: (){
+          Navigator.push(context, 
+            CupertinoPageRoute(builder: (_)=>ProduitsView()));
+        }, child: Text("Produits")),
       ),
     );
   }

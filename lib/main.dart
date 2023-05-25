@@ -22,8 +22,14 @@ class _MyAppState extends State<MyApp> {
     database.clientDao.insertClient(Client(null,"ismail97", "123456","0653406950","user"));
   }
 
+  insertProduit()async{
+    final database = await AppDatabase.create();
+    database.produitDAO.insertProduit(Produit(null,"Café",11.0,5));
+  }
+
   @override
   void initState() {
+    // insertClient();
     super.initState();
   }
 
