@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:secondapp/add_product.dart';
 import 'package:secondapp/database/database.dart';
 import 'package:secondapp/database/model.dart';
 
@@ -30,7 +32,22 @@ class _ProduitsViewState extends State<ProduitsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("List produit")),
+      appBar: AppBar(
+        title: Text("List produit"),
+        actions: [
+          IconButton(
+            onPressed: (){
+              Navigator.push(
+                context, 
+                CupertinoPageRoute(builder: (_)=>AddProductView())).then(
+                  (value){
+                    getToutProduit();
+                  });
+            }, 
+            icon: Icon(Icons.add),
+          )
+        ],  
+      ),
       body: ListView.builder(
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),

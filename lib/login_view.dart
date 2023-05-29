@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secondapp/app_preferences.dart';
+import 'package:secondapp/common/functions.dart';
 import 'package:secondapp/data_source.dart';
 import 'package:secondapp/database/database.dart';
 import 'package:secondapp/home_view.dart';
@@ -68,14 +69,5 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  InputDecoration getInputDecoration(String label){
-    return InputDecoration(
-      labelText: label, //username or password
-      hintText: label,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide: BorderSide(color: Colors.blue)
-      )
-    );
-  }
+  
 }
