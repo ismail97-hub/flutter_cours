@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:secondapp/add_product.dart';
 import 'package:secondapp/database/database.dart';
 import 'package:secondapp/database/model.dart';
+import 'package:secondapp/update_product.dart';
 
 class ProduitsView extends StatefulWidget {
   const ProduitsView({super.key});
@@ -53,17 +54,44 @@ class _ProduitsViewState extends State<ProduitsView> {
         physics: ClampingScrollPhysics(),
         itemCount: produits.length,
         itemBuilder: (context, index) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            height: 70,
-            child: Card(
-              child: Row(
-                children: [
-                  Expanded(flex: 1,child: Text("${produits[index].id}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
-                  Expanded(flex: 3,child: Text("${produits[index].designation}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
-                  Expanded(flex: 1 ,child: Text("${produits[index].pu}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
-                  
-                ],
+          return Dismissible(
+            key: Key(produits[index].id.toString()),
+            background: Container(
+              color: Colors.red,
+              child: Icon(Icons.delete,color: Colors.white),
+            ),
+            secondaryBackground: Container(
+              color: Colors.green,
+              child: Icon(Icons.update,color: Colors.white),
+            ),
+            onDismissed: (direction) async{
+              if (direction==DismissDirection.endToStart) {
+                Navigator.push(
+                  context, 
+                  CupertinoPageRoute(builder: (_)=>UpdateProductView(produit: produits[index])))
+                    .then((value){
+                      Navigator.of(context).pop();
+                    } );
+              } else if(direction==DismissDirection.startToEnd){
+                final database = await AppDatabase.create();
+                database.produitDAO.deleteProduit(produits[index]);
+              }
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              height: 70,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      Expanded(flex: 1,child: Text("${produits[index].id}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
+                      Expanded(flex: 3,child: Text("${produits[index].designation}",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,fontSize: 18))),
+                      Expanded(flex: 2,child: Text("${produits[index].pu} DH",textAlign: TextAlign.end,style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 16))),
+                      
+                    ],
+                  ),
+                ),
               ),
             ),
           );

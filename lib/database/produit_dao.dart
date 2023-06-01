@@ -7,6 +7,12 @@ abstract class ProduitDAO {
   Future<List<Produit>> findAll();
 
   @insert
-  Future<void> insertProduit(Produit produit);
+  Future<int> insertProduit(Produit produit);
+
+  @delete
+  Future<void> deleteProduit(Produit produit);
+
+  @update
+  Future<void> updateProduit(Produit produit);
 }
 

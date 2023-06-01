@@ -162,6 +162,26 @@ class _$ProduitDAO extends ProduitDAO {
                   'designation': item.designation,
                   'pu': item.pu,
                   'qte': item.qte
+                }),
+        _produitUpdateAdapter = UpdateAdapter(
+            database,
+            'Produit',
+            ['id'],
+            (Produit item) => <String, Object?>{
+                  'id': item.id,
+                  'designation': item.designation,
+                  'pu': item.pu,
+                  'qte': item.qte
+                }),
+        _produitDeletionAdapter = DeletionAdapter(
+            database,
+            'Produit',
+            ['id'],
+            (Produit item) => <String, Object?>{
+                  'id': item.id,
+                  'designation': item.designation,
+                  'pu': item.pu,
+                  'qte': item.qte
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -171,6 +191,10 @@ class _$ProduitDAO extends ProduitDAO {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<Produit> _produitInsertionAdapter;
+
+  final UpdateAdapter<Produit> _produitUpdateAdapter;
+
+  final DeletionAdapter<Produit> _produitDeletionAdapter;
 
   @override
   Future<List<Produit>> findAll() async {
@@ -183,7 +207,18 @@ class _$ProduitDAO extends ProduitDAO {
   }
 
   @override
-  Future<void> insertProduit(Produit produit) async {
-    await _produitInsertionAdapter.insert(produit, OnConflictStrategy.abort);
+  Future<int> insertProduit(Produit produit) {
+    return _produitInsertionAdapter.insertAndReturnId(
+        produit, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateProduit(Produit produit) async {
+    await _produitUpdateAdapter.update(produit, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteProduit(Produit produit) async {
+    await _produitDeletionAdapter.delete(produit);
   }
 }
