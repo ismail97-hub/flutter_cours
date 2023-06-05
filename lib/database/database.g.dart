@@ -89,7 +89,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Client` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `telephone` TEXT NOT NULL, `role` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Produit` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `designation` TEXT NOT NULL, `pu` REAL NOT NULL, `qte` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Produit` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `designation` TEXT NOT NULL, `image` TEXT, `pu` REAL NOT NULL, `qte` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -160,6 +160,7 @@ class _$ProduitDAO extends ProduitDAO {
             (Produit item) => <String, Object?>{
                   'id': item.id,
                   'designation': item.designation,
+                  'image': item.image,
                   'pu': item.pu,
                   'qte': item.qte
                 }),
@@ -170,6 +171,7 @@ class _$ProduitDAO extends ProduitDAO {
             (Produit item) => <String, Object?>{
                   'id': item.id,
                   'designation': item.designation,
+                  'image': item.image,
                   'pu': item.pu,
                   'qte': item.qte
                 }),
@@ -180,6 +182,7 @@ class _$ProduitDAO extends ProduitDAO {
             (Produit item) => <String, Object?>{
                   'id': item.id,
                   'designation': item.designation,
+                  'image': item.image,
                   'pu': item.pu,
                   'qte': item.qte
                 });
@@ -202,6 +205,7 @@ class _$ProduitDAO extends ProduitDAO {
         mapper: (Map<String, Object?> row) => Produit(
             row['id'] as int?,
             row['designation'] as String,
+            row['image'] as String?,
             row['pu'] as double,
             row['qte'] as int));
   }

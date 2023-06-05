@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secondapp/add_product.dart';
@@ -79,18 +81,25 @@ class _ProduitsViewState extends State<ProduitsView> {
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              height: 70,
+              // height: 70,
               child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    children: [
-                      Expanded(flex: 1,child: Text("${produits[index].id}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                      Expanded(flex: 3,child: Text("${produits[index].designation}",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,fontSize: 18))),
-                      Expanded(flex: 2,child: Text("${produits[index].pu} DH",textAlign: TextAlign.end,style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 16))),
-                      
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      // height: 60,
+                      child: Image.file(File(produits[index].image??""),fit: BoxFit.cover)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Expanded(flex: 1,child: Text("${produits[index].id}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
+                          Expanded(flex: 3,child: Text("${produits[index].designation}",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,fontSize: 18))),
+                          Expanded(flex: 2,child: Text("${produits[index].pu} DH",textAlign: TextAlign.end,style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 16))),
+                          
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

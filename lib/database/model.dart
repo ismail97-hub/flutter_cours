@@ -23,10 +23,12 @@ class Produit {
 
   String designation;
 
+  String? image;
+
   double pu;
 
   int qte;
 
-  Produit(this.id,this.designation,this.pu,this.qte);
+  Produit(this.id,this.designation,this.image,this.pu,this.qte);
 
 }
