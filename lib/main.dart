@@ -20,7 +20,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   insertClient()async{
     final database = await AppDatabase.create();
-    database.clientDao.insertClient(Client(null,"ismail97", "123456","0653406950","user"));
+    List<Client> clients = await database.clientDao.findAll();
+    if(clients.isEmpty){
+      database.clientDao.insertClient(Client(null,"ismail97", "123456","0653406950","user"));     
+    }
   }
 
   @override

@@ -144,6 +144,22 @@ class _$ClientDAO extends ClientDAO {
   }
 
   @override
+  Future<Client?> findByUsernameAndPassword(
+    String username,
+    String password,
+  ) async {
+    return _queryAdapter.query(
+        'SELECT * FROM Client WHERE username = ?1 AND password = ?2',
+        mapper: (Map<String, Object?> row) => Client(
+            row['id'] as int?,
+            row['username'] as String,
+            row['password'] as String,
+            row['telephone'] as String,
+            row['role'] as String),
+        arguments: [username, password]);
+  }
+
+  @override
   Future<void> insertClient(Client client) async {
     await _clientInsertionAdapter.insert(client, OnConflictStrategy.abort);
   }

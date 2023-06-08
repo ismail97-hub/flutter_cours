@@ -28,7 +28,7 @@ class _HomeViewState extends State<HomeView> {
       body: Center(
         child: ElevatedButton(onPressed: (){
           Navigator.push(context, 
-            CupertinoPageRoute(builder: (_)=>ProductsGrid()));
+            CupertinoPageRoute(builder: (_)=>ProduitsView()));
         }, child: Text("Produits")),
       ),
     );

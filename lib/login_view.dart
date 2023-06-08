@@ -15,8 +15,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  String? username;
-  String? password;
+  String username = "";
+  String password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +55,11 @@ class _LoginViewState extends State<LoginView> {
               width: double.infinity,
               child: ElevatedButton(onPressed: ()async{
                 final database = await AppDatabase.create();
-                List<Client> clients1 = await database.clientDao.findAll();
-                for (Client client in clients1) {
-                  if (client.username==username&&client.password==password) {
-                    Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (_)=>HomeView()),(_)=>false);
-                    setIsLoggedIn(true);
-                  }
-                }
+                Client? client = await database.clientDao.findByUsernameAndPassword(username, password); 
+                if (client!=null) {
+                  Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (_)=>HomeView()),(_)=>false);
+                  setIsLoggedIn(true);
+                }               
               }, child: Text("Login")))    
           ],
         ),
