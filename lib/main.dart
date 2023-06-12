@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:secondapp/app_preferences.dart';
 import 'package:secondapp/database/database.dart';
 import 'package:secondapp/database/model.dart';
-import 'package:secondapp/home_view.dart';
+import 'package:secondapp/home_admin.dart';
+import 'package:secondapp/home_user.dart';
 import 'package:secondapp/login_view.dart';
 
 void main(List<String> args) {
@@ -37,11 +38,19 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder<bool>(
-        future: isLoggedIn(),
+      home: FutureBuilder<String>(
+        future: getRole(),
         builder: (context, snapshot) {
-          bool isLoggedIn = snapshot.data??false;
-          return isLoggedIn == true?HomeView():LoginView();
+          String role = snapshot.data??"";
+          return FutureBuilder<bool>(
+            future: isLoggedIn(),
+            builder: (context, snapshot) {
+              bool isLoggedIn = snapshot.data??false;
+              return isLoggedIn == true
+                ? role=="user" ? HomeUser() : HomeAdmin()
+                : LoginView();
+            }
+          );
         }
       ),
     );

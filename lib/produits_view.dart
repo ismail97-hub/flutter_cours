@@ -17,7 +17,7 @@ class ProduitsView extends StatefulWidget {
 class _ProduitsViewState extends State<ProduitsView> {
   List<Produit> produits = [];
 
-  getToutProduit()async{
+  getAllProduct()async{
     final database = await AppDatabase.create();
     database.produitDAO.findAll().then((value) {
       setState(() {
@@ -28,7 +28,7 @@ class _ProduitsViewState extends State<ProduitsView> {
   
   @override
   void initState() {
-    getToutProduit();
+    getAllProduct();
     super.initState();
   }
 
@@ -44,7 +44,7 @@ class _ProduitsViewState extends State<ProduitsView> {
                 context, 
                 CupertinoPageRoute(builder: (_)=>AddProductView())).then(
                   (value){
-                    getToutProduit();
+                    getAllProduct();
                   });
             }, 
             icon: Icon(Icons.add),

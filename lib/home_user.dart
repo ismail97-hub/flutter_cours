@@ -5,19 +5,19 @@ import 'package:secondapp/login_view.dart';
 import 'package:secondapp/products_grid.dart';
 import 'package:secondapp/produits_view.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class HomeUser extends StatefulWidget {
+  const HomeUser({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<HomeUser> createState() => _HomeUserState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeUserState extends State<HomeUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Home User"),
         actions: [
           IconButton(onPressed: (){
             Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (_)=>LoginView()), (route) => false);

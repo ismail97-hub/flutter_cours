@@ -4,7 +4,8 @@ import 'package:secondapp/app_preferences.dart';
 import 'package:secondapp/common/functions.dart';
 import 'package:secondapp/data_source.dart';
 import 'package:secondapp/database/database.dart';
-import 'package:secondapp/home_view.dart';
+import 'package:secondapp/home_admin.dart';
+import 'package:secondapp/home_user.dart';
 import 'package:secondapp/database/model.dart';
 
 class LoginView extends StatefulWidget {
@@ -57,8 +58,15 @@ class _LoginViewState extends State<LoginView> {
                 final database = await AppDatabase.create();
                 Client? client = await database.clientDao.findByUsernameAndPassword(username, password); 
                 if (client!=null) {
-                  Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (_)=>HomeView()),(_)=>false);
                   setIsLoggedIn(true);
+                  setRole(client.role);
+                  if (client.role=="user") {
+                    Navigator.pushAndRemoveUntil(
+                    context, CupertinoPageRoute(builder: (_)=>HomeUser()),(_)=>false);
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                    context, CupertinoPageRoute(builder: (_)=>HomeAdmin()),(_)=>false);
+                  } 
                 }               
               }, child: Text("Login")))    
           ],
