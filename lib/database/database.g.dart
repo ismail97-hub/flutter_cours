@@ -89,7 +89,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Client` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `telephone` TEXT NOT NULL, `role` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Produit` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `designation` TEXT NOT NULL, `image` TEXT, `pu` REAL NOT NULL, `qte` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Produit` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `designation` TEXT NOT NULL, `image` TEXT, `pu` REAL NOT NULL, `qte` INTEGER NOT NULL, `clientId` INTEGER NOT NULL, `date` TEXT NOT NULL, `heure` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -178,7 +178,10 @@ class _$ProduitDAO extends ProduitDAO {
                   'designation': item.designation,
                   'image': item.image,
                   'pu': item.pu,
-                  'qte': item.qte
+                  'qte': item.qte,
+                  'clientId': item.clientId,
+                  'date': item.date,
+                  'heure': item.heure
                 }),
         _produitUpdateAdapter = UpdateAdapter(
             database,
@@ -189,7 +192,10 @@ class _$ProduitDAO extends ProduitDAO {
                   'designation': item.designation,
                   'image': item.image,
                   'pu': item.pu,
-                  'qte': item.qte
+                  'qte': item.qte,
+                  'clientId': item.clientId,
+                  'date': item.date,
+                  'heure': item.heure
                 }),
         _produitDeletionAdapter = DeletionAdapter(
             database,
@@ -200,7 +206,10 @@ class _$ProduitDAO extends ProduitDAO {
                   'designation': item.designation,
                   'image': item.image,
                   'pu': item.pu,
-                  'qte': item.qte
+                  'qte': item.qte,
+                  'clientId': item.clientId,
+                  'date': item.date,
+                  'heure': item.heure
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -223,7 +232,10 @@ class _$ProduitDAO extends ProduitDAO {
             row['designation'] as String,
             row['image'] as String?,
             row['pu'] as double,
-            row['qte'] as int));
+            row['qte'] as int,
+            row['clientId'] as int,
+            row['date'] as String,
+            row['heure'] as String));
   }
 
   @override

@@ -20,3 +20,13 @@ Future<String> getRole()async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString("role")??"";
 }
+
+void setClientId(int id)async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setInt("id", id);
+}
+
+Future<int> getClientId()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getInt("id")??0;
+}

@@ -29,6 +29,12 @@ class Produit {
 
   int qte;
 
-  Produit(this.id,this.designation,this.image,this.pu,this.qte);
+  int clientId;
+  
+  String date;
+
+  String heure;
+
+  Produit(this.id,this.designation,this.image,this.pu,this.qte,this.clientId,this.date,this.heure);
 
 }

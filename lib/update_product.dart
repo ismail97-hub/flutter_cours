@@ -83,7 +83,16 @@ class _UpdateProductViewState extends State<UpdateProductView> {
               child: ElevatedButton(
                 onPressed: ()async{
                   final database = await AppDatabase.create();
-                  database.produitDAO.updateProduit(Produit(widget.produit.id, designation,"",pu, quantite));
+                  database.produitDAO.updateProduit(
+                    Produit(
+                      widget.produit.id, 
+                      designation,
+                      widget.produit.image,
+                      pu, 
+                      quantite,
+                      0,
+                      widget.produit.date,
+                      widget.produit.heure));
                   Navigator.of(context).pop();
                 }, 
                 child: Text("Modifier")))

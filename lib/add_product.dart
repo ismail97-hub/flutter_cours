@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:secondapp/app_preferences.dart';
 import 'package:secondapp/common/functions.dart';
 import 'package:secondapp/database/database.dart';
 import 'package:secondapp/database/model.dart';
@@ -17,6 +18,21 @@ class _AddProductViewState extends State<AddProductView> {
   int quantite = 0;
   double pu = 0;
   File? image;
+  int clientId = 0;
+
+  fetch(){
+    getClientId().then((value) {
+      setState(() {
+        clientId = value;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    fetch();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +88,16 @@ class _AddProductViewState extends State<AddProductView> {
                   onPressed: ()async{
                     String imagePath = await saveImage(designation+".jpg", image);
                     final database = await AppDatabase.create();
-                    database.produitDAO.insertProduit(Produit(null, designation,imagePath, pu, quantite));
+                    database.produitDAO.insertProduit(
+                      Produit(
+                        null, 
+                        designation,
+                        imagePath, 
+                        pu, 
+                        quantite,
+                        clientId,
+                        getDateNow(),
+                        getTimeNow()));
                     Navigator.of(context).pop();
                   }, 
                   child: Text("Ajouter")))

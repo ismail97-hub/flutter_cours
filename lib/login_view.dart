@@ -60,6 +60,7 @@ class _LoginViewState extends State<LoginView> {
                 if (client!=null) {
                   setIsLoggedIn(true);
                   setRole(client.role);
+                  setClientId(client.id??0);
                   if (client.role=="user") {
                     Navigator.pushAndRemoveUntil(
                     context, CupertinoPageRoute(builder: (_)=>HomeUser()),(_)=>false);
